@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>covid-vs-vaccine-mortality-japan</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    h1, h2, h3, h4 {
+      font-weight: 300;
+    }
+
+    /* Sticky footer styles
+    -------------------------------------------------- */
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+    body {
+      margin-bottom: 60px; /* Margin bottom by footer height */
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px; /* Set the fixed height of the footer here */
+      line-height: 60px; /* Vertically center the text there */
+      background-color: #187bcd;
+    }
+  </style>
+</head>
+<body>
+  <main role="main" class="pb-4" style="background-color: #eeeeee;">
+    <div class="py-3"></div>
+    <div class="container pt-5 pb-5" style="background-color: #ffffff;">
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
+          <div class="container">
+            <h1 class="display-4 pt-5">コロナ罹患とワクチン接種の死亡率比較</h1>
+            <div class="text-end">
+              <p class="mb-1"><a href="https://wkentaro.com">和田健太郎</a>, 和田さつき</p>
+              <p class="mb-1">2021-07-11</p>
+            </div>
+          </div>
+
+          <div class="container mt-5">
+            <h2>本稿の目的</h2>
+            <div class="px-3">
+              <p>
+              「重症化を防ぎ、死亡する確率を下げる」ことがワクチン接種の大きな効用の一つとして挙げられており、国民への早期接種が呼びかけられている*1。
+              その一方で、2020年から1年半あまりたった現在でも若年層の死亡例は少なく（20歳未満: 0人, 20代: 7人）、重症化を防ぐ意図での若年層の接種は効果が高いのか
+              はやや疑問が残る。そこで本稿では、過去の日本における死亡者数のデータを用いてコロナ罹患による死亡率とワクチン接種による死亡率を比較し、
+              コロナ罹患とワクチン接種のどちらの方が死のリスクが高いと言えるのかを年齢別に検証する。この検証によって、<b>リスクを把握した上で個人の利益や公益の
+              ための納得したワクチン接種の助けとなることを本稿の目的とする</b>。
+              </p>
+              <ul class="list-unstyled">
+                <li>*1 <a href="https://www.cov19-vaccine.mhlw.go.jp/qa/0011.html">新型コロナワクチンQ&A</a></LI>
+              </ul>
+            </div>
+          </div>
+
+          <div class="container mt-5">
+            <h2>コロナ罹患による死亡率</h2>
+            <div class="px-3">
+              <p>
+                コロナによる死亡率として、(コロナ罹患による累計死亡者数)÷(総人口)を計算し、年齢別に死亡率を出したものを下表に示す。
+                この年齢別の変化を見ると、20代では180万人に一人とかなり少ない確率なのに対し、60代では1.8万人に一人と100倍確率が増えている事がわかり、
+                <b>年齢による死亡率の変化が著しいことがわかる</b>。
+              </p>
+              <p>
+                ※ここでの分母に感染者数ではなく総人口を用いてるため、(ここでの死亡率)=(感染する率)×(感染した上での死亡率)になることに注意されたい。
+                つまり、ここでの死亡率が低いのは必ずしもコロナウイルスに対して抗体あるということを示しているわけではなく、罹患しないための日頃の心がけ
+                も影響している可能性が高いということである。今後人々の行動が変化することによって死亡率も大きく変化する可能性は十分にある。
+              </p>
+              <table class="table table-sm table-bordered text-end">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th width="15%">人口 [万人] *2</th>
+                    <th width="20%">コロナ死亡者数 [人] *3</th>
+                    <th width="20%">コロナ死亡率<br/>(死亡者数/人口)</th>
+                    <th width="40%">1/コロナ死亡確率<br/> [万人に一人]</th>
+                  </tr>
+                  <tr>
+                    <th width="5%">年齢</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>&lt;10</th>
+                    <td>956</td>
+                    <td>0</td>
+                    <td>0.000000</td>
+                    <td>inf</td>
+                  </tr>
+                  <tr>
+                    <th>10s</th>
+                    <td>1094</td>
+                    <td>0</td>
+                    <td>0.000000</td>
+                    <td>inf</td>
+                  </tr>
+                  <tr>
+                    <th>20s</th>
+                    <td>1274</td>
+                    <td>7</td>
+                    <td>0.000001</td>
+                    <td>182.00</td>
+                  </tr>
+                  <tr>
+                    <th>30s</th>
+                    <td>1383</td>
+                    <td>27</td>
+                    <td>0.000002</td>
+                    <td>51.22</td>
+                  </tr>
+                  <tr>
+                    <th>40s</th>
+                    <td>1791</td>
+                    <td>102</td>
+                    <td>0.000006</td>
+                    <td>17.56</td>
+                  </tr>
+                  <tr>
+                    <th>50s</th>
+                    <td>1678</td>
+                    <td>309</td>
+                    <td>0.000018</td>
+                    <td>5.43</td>
+                  </tr>
+                  <tr>
+                    <th>60s</th>
+                    <td>1534</td>
+                    <td>860</td>
+                    <td>0.000056</td>
+                    <td>1.78</td>
+                  </tr>
+                  <tr>
+                    <th>70s</th>
+                    <td>1644</td>
+                    <td>2766</td>
+                    <td>0.000168</td>
+                    <td>0.59</td>
+                  </tr>
+                  <tr>
+                    <th>80s</th>
+                    <td>936</td>
+                    <td>4888</td>
+                    <td>0.000522</td>
+                    <td>0.19</td>
+                  </tr>
+                  <tr>
+                    <th>90+</th>
+                    <td>257</td>
+                    <td>2504</td>
+                    <td>0.000974</td>
+                    <td>0.10</td>
+                  </tr>
+                </tbody>
+              </table>
+              <ul class="list-unstyled">
+                <li>*2 <a href="https://www.stat.go.jp/data/jinsui/pdf/202106.pdf">日本人口(2021-06)</a></li>
+                <li>*3 <a href="http://www.ipss.go.jp/projects/j/Choju/covid19/">コロナによる年齢別死亡者数(2021-07-05)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="container mt-5">
+            <h2>ワクチン接種による死亡率</h2>
+            <div class="px-3">
+              <p>
+                次にワクチン接種による死亡率の計算として、(ワクチン接種後の死亡者数)÷(少なくとも一回のワクチン接種数)を計算したものを下表に示す。
+                ここで用いた接種状況に関するデータ*4には、年齢が65歳未満か65歳以上のどちらかしか記載されていなかったため、各年代ごとの検証は行えず
+                65歳以上か65歳未満の2グループでの比較を行った。65歳以上での死亡率が4.7万人に一人、65歳未満での死亡率が7万人に一人となっており、
+                <b>年齢の減少による死亡率の低下はあるもののコロナ罹患によるものよりも減少率は低くなっている</b>。
+              </p>
+              <p>
+                実際、65歳以上で4.7万人に一人という値を100歳までの年齢の平均値(65 + 100) / 2 = 82歳での値、
+                65歳未満で7万人一人という値を20歳からの平均(20 + 65) / 2 = 42歳での値として読み替えると、
+                コロナ罹患による死亡率は80代から40代で0.2万人に一人から18万人に一人に約90倍低くなっているのに対して、
+                ワクチン接種による死亡率は82歳から42歳で4.7万人に一人から7万人に一人と約1.5倍しか低くなっておらず、
+                ワクチン接種によるリスクの年齢による減少率は低いことがわかる。
+              </p>
+              <table class="table table-sm table-bordered text-end">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th width="15%">ワクチン接種数<br/>(少なくとも1回) *4</th>
+                    <th width="20%">ワクチン接種後の死亡者数<br/>(平均約5日以内) *5</th>
+                    <th width="20%">ワクチン死亡率<br/>(死亡者数/人口)</th>
+                    <th width="40%">1/ワクチン死亡率<br/> [万人に一人]</th>
+                  </tr>
+                  <tr>
+                    <th width="5%">年齢</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>65+</th>
+                    <td>24614681</td>
+                    <td>523</td>
+                    <td>0.000021</td>
+                    <td>4.71</td>
+                  </tr>
+                  <tr>
+                    <th>&lt;65</th>
+                    <td>2665544</td>
+                    <td>38</td>
+                    <td>0.000014</td>
+                    <td>7.01</td>
+                  </tr>
+                </tbody>
+              </table>
+              <ul class="list-unstyled">
+                <li>*4 <a href="https://cio.go.jp/c19vaccine_opendata">ワクチン接種者数(2021-07-07)</a></li>
+                <li>*5 <a href="https://www.mhlw.go.jp/content/10601000/000802338.pdf">ワクチンによる死亡者数(2021-07-07)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="container mt-5">
+            <h2>死亡率の比較</h2>
+            <p>
+              これまでの検証によってコロナ罹患による死亡率の変化率はワクチン接種による死亡率の変化率よりも遥かに大きく、
+              このことから<b>年齢が低くなるとワクチン接種による死亡率の方がコロナ罹患による死亡率を上回ってしまう</b>ことがわかった
+              （コロナ罹患死亡率は40代で18万人に一人 &lt; ワクチン接種死亡率は42歳相当で4.7万人に一人)。
+            </p>
+            <p>
+              そこで年代別のコロナ罹患死亡率とワクチン接種死亡率を下図にプロットし、およそ何歳で死亡率の大きさが反転するのかを
+              検証した。下図左は全年齢でプロットしたもの、右図は40歳以上でプロットしたもので、縦軸は「○万人に一人」という形式で
+              死亡率を表しており、高いほど死ににくいということになる。
+              これによると、およそ54歳の時点で死亡率の大きさが反転し、<b>54歳以上ではコロナ罹患の方が死亡率が高く、54歳以下ではワクチン接種の方が死亡率が高いことがわかる</b>。
+            </p>
+            <div class="row px-3">
+              <div class="col-md-6">
+                <img src="plots/all_age.png" class="img-fluid" alt="all age">
+              </div>
+              <div class="col-md-6">
+                <img src="plots/over_40.png" class="img-fluid" alt="over 40">
+              </div>
+            </div>
+          </div>
+
+          <div class="container mt-5">
+            <h2>結論</h2>
+            <p>
+              本稿では、コロナ罹患による死亡率とワクチン接種による死亡率に関して、日本国内における死亡者数のデータを用いて比較を行った。
+              この検証によって2021年7月7日までのデータにおいては、<b>54歳以下ではワクチン接種の方が1年半期間でのコロナ罹患よりも死亡するリスクが高いということがわかった</b>。
+              接種者は、コロナ罹患の可能性がある期間が今後どれだけ続くか、その中で再接種などを含めてワクチンを何度打たなければいけないか（2回目で死亡している例も報告されており
+              1回打って問題なかったからといってその後も問題ないという保証は現状はないと考えられる）ということを加味した上で、個人の利益と公益に照らして接種を判断することが
+              必要になると考えられる。
+            </p>
+          </div>
+
+          <div class="container mt-5">
+            <h2>Appendix</h2>
+            <div class="container">
+              <h4>データや処理スクリプト</h4>
+              <p>本稿で用いたデータやその処理スクリプトは<a href="https://github.com/wkentaro/covid-vs-vaccine-mortality-japan">GitHub</a>にて公開されている。</p>
+              <h4>自動車事故による死亡率と比較すると？</h4>
+              <p>
+                概算ではあるが、自動車事故による死亡者数は歩行者の死亡に限定した場合、2020年の上半期で約300人*6、1年半（これまでのコロナ期間）に換算すると約900人となる。
+                これを総人口の12000万人によって死亡率を計算すると、 12000 / 900 = 13万人に一人という計算になる。
+                42歳相当のワクチン接種死亡率が7万人に一人であることと比較すると、ワクチンの方が約2倍死亡しやすいと言うことになる。
+                歩行者ではなく運転者の立場で歩行者を死なせてしまう確率も同じ13万人に一人とすると、もしそのような事故の可能性を考えて自動車保険に入っているのなら、
+                ワクチンを受ける前に死亡保険にも入ったほうがいいと言えるのかもしれない。
+              </p>
+              <ul class="list-unstyled">
+                <li>*6 <a href="https://www.npa.go.jp/publications/statistics/koutsuu/jiko/R2kamihanki_bunseki.pdf">令和２年上半期における交通死亡事故の発生状況</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pt-5"></div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center">
+      <span class="text-light">© 2021 Kentaro Wada</span>
+    </div>
+  </footer>
+
+</body>
+
+</html>

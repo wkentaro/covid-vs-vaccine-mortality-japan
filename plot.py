@@ -49,6 +49,20 @@ def get_covid_data():
     df["1/covid_death_rate"] = 1 / df["covid_death_rate"]
     df["1/covid_death_rate [10K]"] = df["1/covid_death_rate"] / 1e4
 
+    df["population"] = df["population"] / 1e4
+    df = df.astype({"population": int})
+    df = df.rename(columns={"population": "population [10K]"})
+
+    df = df.drop(
+        columns=[
+            "covid_death_male",
+            "covid_death_female",
+            "population_male",
+            "population_female",
+            "1/covid_death_rate",
+        ]
+    )
+
     return df
 
 
@@ -81,6 +95,15 @@ def get_vaccine_data():
     df["1/vaccine_death_rate"] = 1 / df["vaccine_death_rate"]
     df["1/vaccine_death_rate [10K]"] = df["1/vaccine_death_rate"] / 1e4
 
+    df = df.drop(
+        columns=[
+            "population",
+            "vaccine_death_male",
+            "vaccine_death_female",
+            "1/vaccine_death_rate",
+        ]
+    )
+
     return df
 
 
@@ -94,31 +117,33 @@ def main():
     df_covid = get_covid_data()
     df_vaccine = get_vaccine_data()
 
-    df_covid = df_covid.reset_index()
-    df_covid["age"] = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95]
-
-    df_vaccine = df_vaccine.reset_index()
-    df_vaccine["age"] = [(65 + 100) / 2, (20 + 64) / 2]
-
     print(df_covid)
     print(df_vaccine)
 
+    df_covid = df_covid.reset_index()
+    df_covid["age"] = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95]
+    df_covid = df_covid.set_index("age")
+
+    df_vaccine = df_vaccine.reset_index()
+    df_vaccine["age"] = [(65 + 100) / 2, (20 + 64) / 2]
+    df_vaccine = df_vaccine.set_index("age")
+
     if not args.all_age:
-        df_covid = df_covid[df_covid["age"] > 40]
-        df_vaccine = df_vaccine[df_vaccine["age"] > 40]
+        df_covid = df_covid[df_covid.index > 40]
+        df_vaccine = df_vaccine[df_vaccine.index > 40]
 
     plt.figure(figsize=(9, 9))
     plt.plot(
-        df_covid["age"],
+        df_covid.index,
         df_covid["1/covid_death_rate [10K]"],
         marker="o",
-        label="コロナによる死亡確率　 (2021-07-05時点)",
+        label="コロナによる死亡率　 (2021-07-05時点)",
     )
     plt.plot(
-        df_vaccine["age"],
+        df_vaccine.index,
         df_vaccine["1/vaccine_death_rate [10K]"],
         marker="o",
-        label="ワクチンによる死亡確率 (2021-07-07時点)",
+        label="ワクチンによる死亡率 (2021-07-07時点)",
     )
     # ワクチンの死亡率がコロナを上回る年齢
     plt.vlines(54.2, ymin=-10, ymax=200, colors="k", linestyles="dashed")
@@ -129,9 +154,9 @@ def main():
     else:
         plt.xlim(40, 100)
     if args.all_age:
-        plt.title("全年齢の死亡確率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
+        plt.title("全年齢の死亡率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
     else:
-        plt.title("40歳以上の死亡確率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
+        plt.title("40歳以上の死亡率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
     if args.all_age:
         plt.ylim(-10, 200)
     else:
