@@ -1,3 +1,5 @@
+japanize_matplotlib
+matplotlib
 ndjson
 openpyxl
 pandas

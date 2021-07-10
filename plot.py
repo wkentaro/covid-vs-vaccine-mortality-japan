@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
+import argparse
+
+import japanize_matplotlib  # NOQA
 import matplotlib.pyplot as plt
 import ndjson
 import pandas
-import seaborn
 
 
 def get_covid_data():
@@ -83,6 +85,12 @@ def get_vaccine_data():
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("--all-age", action="store_true", help="all age")
+    args = parser.parse_args()
+
     df_covid = get_covid_data()
     df_vaccine = get_vaccine_data()
 
@@ -95,10 +103,42 @@ def main():
     print(df_covid)
     print(df_vaccine)
 
-    seaborn.lineplot(data=df_covid, x="age", y="1/covid_death_rate [10K]", marker="o")
-    seaborn.lineplot(data=df_vaccine, x="age", y="1/vaccine_death_rate [10K]", marker="o")
-    plt.xlim(20, 100)
+    if not args.all_age:
+        df_covid = df_covid[df_covid["age"] > 40]
+        df_vaccine = df_vaccine[df_vaccine["age"] > 40]
+
+    plt.figure(figsize=(9, 9))
+    plt.plot(
+        df_covid["age"],
+        df_covid["1/covid_death_rate [10K]"],
+        marker="o",
+        label="コロナによる死亡確率　 (2021-07-05時点)",
+    )
+    plt.plot(
+        df_vaccine["age"],
+        df_vaccine["1/vaccine_death_rate [10K]"],
+        marker="o",
+        label="ワクチンによる死亡確率 (2021-07-07時点)",
+    )
+    # ワクチンの死亡率がコロナを上回る年齢
+    plt.vlines(54.2, ymin=-10, ymax=200, colors="k", linestyles="dashed")
+    plt.xticks(list(plt.xticks()[0]) + [54.2])
+    plt.xlabel("年齢", size=15)
+    if args.all_age:
+        plt.xlim(20, 100)
+    else:
+        plt.xlim(40, 100)
+    if args.all_age:
+        plt.title("全年齢の死亡確率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
+    else:
+        plt.title("40歳以上の死亡確率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
+    if args.all_age:
+        plt.ylim(-10, 200)
+    else:
+        plt.ylim(-1, 20)
     plt.grid(True)
+    plt.legend(fontsize="large")
+    plt.tight_layout()
     plt.show()
 
 
