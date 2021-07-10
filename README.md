@@ -12,7 +12,7 @@ pip install -r requirements.txt
 ./plot.py [--all-age]
 ```
 
-<img src="./plots/all_age.png" width="49%"> <img src="./plots/over_40.png" width="49%">
+<img src="docs/plots/all_age.png" width="49%"> <img src="docs/plots/over_40.png" width="49%">
 
 ```
 # Covid data table
