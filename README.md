@@ -1,4 +1,6 @@
-# covid-vs-vaccine-mortality-japan
+# コロナ罹患とワクチン接種の死亡率比較
+
+レポート: https://covid-vs-vaccine-mortality-japan.wkentaro.com/
 
 ## Installation
 
