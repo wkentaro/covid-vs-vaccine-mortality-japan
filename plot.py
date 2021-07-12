@@ -112,6 +112,7 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--all-age", action="store_true", help="all age")
+    parser.add_argument("--english", action="store_true", help="english")
     args = parser.parse_args()
 
     df_covid = get_covid_data()
@@ -133,30 +134,49 @@ def main():
         df_vaccine = df_vaccine[df_vaccine.index > 40]
 
     plt.figure(figsize=(9, 9))
+    if args.english:
+        label = "Mortality by COVID　 (reported until 2021-07-05)"
+    else:
+        label = "コロナによる死亡率　 (2021-07-05時点)"
     plt.plot(
         df_covid.index,
         df_covid["1/covid_death_rate [10K]"],
         marker="o",
-        label="コロナによる死亡率　 (2021-07-05時点)",
+        label=label,
     )
+    if args.english:
+        label = "Mortality by vaccination (reported until 2021-07-07)"
+    else:
+        label = "ワクチンによる死亡率 (2021-07-07時点)"
     plt.plot(
         df_vaccine.index,
         df_vaccine["1/vaccine_death_rate [10K]"],
         marker="o",
-        label="ワクチンによる死亡率 (2021-07-07時点)",
+        label=label,
     )
     # ワクチンの死亡率がコロナを上回る年齢
     plt.vlines(54.2, ymin=-10, ymax=200, colors="k", linestyles="dashed")
     plt.xticks(list(plt.xticks()[0]) + [54.2])
-    plt.xlabel("年齢", size=15)
+    if args.english:
+        label = "Age"
+    else:
+        label = "年齢"
+    plt.xlabel(label, size=15)
     if args.all_age:
         plt.xlim(20, 100)
     else:
         plt.xlim(40, 100)
     if args.all_age:
-        plt.title("全年齢の死亡率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
+        if args.english:
+            title = "Mortality in all ages [1 person per 10K]\n（Higher means lower the mortality）"
+        else:
+            title = "全年齢の死亡率 [万人に一人]\n（高いほど死ににくいことを表す）"
     else:
-        plt.title("40歳以上の死亡率 [万人に一人]\n（高いほど死ににくいことを表す）", size=20)
+        if args.english:
+            title = "Mortality in over 40 years [1 person per 10K]\n（Higher means lower the mortality）"
+        else:
+            title = "40歳以上の死亡率 [万人に一人]\n（高いほど死ににくいことを表す）"
+    plt.title(title, size=20)
     if args.all_age:
         plt.ylim(-10, 200)
     else:
