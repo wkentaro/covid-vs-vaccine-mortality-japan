@@ -1,0 +1,14 @@
+# 死因: https://www.mhlw.go.jp/toukei/saikin/hw/jinkou/suii09/deth8.html
+# 年齢別死亡率(男): https://www.mhlw.go.jp/toukei/saikin/hw/life/life19/dl/life19-06.pdf
+# 年齢別死亡率(女): https://www.mhlw.go.jp/toukei/saikin/hw/life/life19/dl/life19-07.pdf
+age,death_rate,death_rate_no_suicide
+20s,0.000345,0.0001173
+30s,0.0005275,0.00028274
+40s,0.001177,0.000865095
+50s,0.0029765,0.00254341925
+60-64,0.005632,0.005142016
+65-69,0.008988,0.008691396
+70s,0.019144,0.01852182
+80s,0.063848,0.062858356
+90s,0.203271,0.203271
+100-104,0.402874,0.402874
